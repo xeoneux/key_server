@@ -47,7 +47,7 @@ class KeysController < ApplicationController
     end
   end
 
-  # DELETE /keys/1
+  # DELETE /keys/1 E4 - Delete A Key
   def destroy
     @key.destroy
   end
@@ -56,10 +56,5 @@ class KeysController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_key
       @key = Key.find(params[:id])
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def key_params
-      params.require(:key).permit(:blocked)
     end
 end
