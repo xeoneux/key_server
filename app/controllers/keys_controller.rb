@@ -18,9 +18,14 @@ class KeysController < ApplicationController
     end
   end
 
-  # GET /keys/1
+  # GET /keys/1 E5 - Keep Key Alive
   def show
-    render json: @key
+    @key.keep_alive = DateTime.now
+    if @key.save
+      render json: @key
+    else
+      render json: @key.errors, status: :unprocessable_entity
+    end
   end
 
   # POST /keys E1 - Generate New Key
