@@ -28,6 +28,7 @@ class KeysController < ApplicationController
 
     if @key.save
       render json: @key, status: :created, location: @key
+      KeyCleanupJob.set(wait: 30.second).perform_later(@key)
     else
       render json: @key.errors, status: :unprocessable_entity
     end
