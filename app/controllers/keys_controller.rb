@@ -9,6 +9,7 @@ class KeysController < ApplicationController
       @key.blocked = true
       if @key.save
         render json: @key
+        UnblockKeyJob.set(wait: 6.second).perform_later(@key)
       else
         render json: @key.errors, status: :unprocessable_entity
       end
