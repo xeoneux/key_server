@@ -1,7 +1,7 @@
 class KeysController < ApplicationController
   before_action :set_key, only: [:show, :update, :destroy]
 
-  # GET /keys
+  # GET /keys E2 - Fetch Available Key
   def index
     @key = Key.all.reject { |key| key[:blocked] }.sample
 
@@ -22,7 +22,7 @@ class KeysController < ApplicationController
     render json: @key
   end
 
-  # POST /keys E1 - Generate Keys
+  # POST /keys E1 - Generate New Key
   def create
     @key = Key.new()
 
@@ -33,12 +33,17 @@ class KeysController < ApplicationController
     end
   end
 
-  # PATCH/PUT /keys/1
+  # PATCH/PUT /keys/1 E3 - Unblock Blocked Key
   def update
-    if @key.update(key_params)
-      render json: @key
+    if @key.blocked
+      @key.blocked = false
+      if @key.save
+        render json: @key
+      else
+        render json: @key.errors, status: :unprocessable_entity
+      end
     else
-      render json: @key.errors, status: :unprocessable_entity
+      render json: @key
     end
   end
 
