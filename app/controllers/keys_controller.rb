@@ -3,9 +3,18 @@ class KeysController < ApplicationController
 
   # GET /keys
   def index
-    @keys = Key.all
+    @key = Key.all.reject { |key| key[:blocked] }.sample
 
-    render json: @keys
+    if @key
+      @key.blocked = true
+      if @key.save
+        render json: @key
+      else
+        render json: @key.errors, status: :unprocessable_entity
+      end
+    else
+      render status: :not_found
+    end
   end
 
   # GET /keys/1
