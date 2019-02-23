@@ -13,9 +13,9 @@ class KeysController < ApplicationController
     render json: @key
   end
 
-  # POST /keys
+  # POST /keys E1 - Generate Keys
   def create
-    @key = Key.new(key_params)
+    @key = Key.new()
 
     if @key.save
       render json: @key, status: :created, location: @key
