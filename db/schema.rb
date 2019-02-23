@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2019_02_23_060221) do
 
   create_table "keys", force: :cascade do |t|
+    t.datetime "keep_alive"
     t.boolean "blocked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
